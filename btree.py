@@ -316,12 +316,12 @@ class Bptree(object):
                     l = l1
                     while True:
                         if l.bro == l2:
-                            if l2.vlist[i2] == ma:
+                            # if l2.vlist[i2] == ma:
                                 result.extend(l2.vlist[:i2 + 1])
                                 return result
-                            else:
-                                result.extend(l2.vlist[:i2])
-                                return result
+                            # else:
+                            #     result.extend(l2.vlist[:i2])
+                            #     return result
                         else:
                             result.extend(l.bro.vlist)
                             l = l.bro
