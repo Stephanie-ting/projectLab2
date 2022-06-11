@@ -2,13 +2,6 @@
 from collections import deque
 
 def bisect_right(a, x, lo=0, hi=None):
-    """Return the index where to insert item x in list a, assuming a is sorted.
-    The return value i is such that all e in a[:i] have e <= x, and all e in
-    a[i:] have e > x.  So if x already appears in the list, a.insert(x) will
-    insert just after the rightmost x already there.
-    Optional args lo (default 0) and hi (default len(a)) bound the
-    slice of a to be searched.
-    """
 
     if lo < 0:
         raise ValueError('lo must be non-negative')
@@ -23,13 +16,7 @@ def bisect_right(a, x, lo=0, hi=None):
     return lo
 
 def bisect_left(a, x, lo=0, hi=None):
-    """Return the index where to insert item x in list a, assuming a is sorted.
-    The return value i is such that all e in a[:i] have e < x, and all e in
-    a[i:] have e >= x.  So if x already appears in the list, a.insert(x) will
-    insert just before the leftmost x already there.
-    Optional args lo (default 0) and hi (default len(a)) bound the
-    slice of a to be searched.
-    """
+
 
     if lo < 0:
         raise ValueError('lo must be non-negative')
@@ -305,7 +292,7 @@ class Bptree(object):
                         return result
                     else:
                         if l2.vlist[i2] == ma:
-                        ## 解决了上界ma不存在于B+树中时出错的问题
+                        # 解决了上界ma不存在于B+树中时出错的问题
                             result.extend(l1.vlist[i1:i2 + 1])
                             return result
                         else:
@@ -316,12 +303,8 @@ class Bptree(object):
                     l = l1
                     while True:
                         if l.bro == l2:
-                            # if l2.vlist[i2] == ma:
-                                result.extend(l2.vlist[:i2 + 1])
-                                return result
-                            # else:
-                            #     result.extend(l2.vlist[:i2])
-                            #     return result
+                            result.extend(l2.vlist[:i2 + 1])
+                            return result
                         else:
                             result.extend(l.bro.vlist)
                             l = l.bro
@@ -337,8 +320,6 @@ class Bptree(object):
                 l = l.bro
 
     def show(self):
-        print
-        'this b+tree is:\n'
         q = deque()
         h = 0
         q.append([self.__root, h])
@@ -380,12 +361,6 @@ class Bptree(object):
                 # 将i的最后一个节点追加到i+1的第一个节点
                 n.clist[i + 1].clist.insert(0, n.clist[i].clist[-1])
                 n.clist[i].clist[-1].par = n.clist[i + 1]
-
-                # 追加 i+1的索引值，以及更新n的i+1索引值
-                ## n.clist[i + 1].ilist.insert(0, n.clist[i].ilist[-1])
-                ## n.ilist[i + 1] = n.clist[i].ilist[-1]
-                ## n.clist[i].clist.pop()
-                ## n.clist[i].ilist.pop()
 
                 # edit:
                 n.clist[i + 1].ilist.insert(0, n.ilist[i])
@@ -453,52 +428,8 @@ class Bptree(object):
         return self.__leaf
 
 
-def test():
-    mini = 2
-    maxi = 60
-    testlist = []
-    for i in range(1, 10):
-        key = i
-        value = i
-        testlist.append(KeyValue(key, value))
-    mybptree = Bptree(4, 4)
-    for kv in testlist:
-        mybptree.insert(kv)
-    mybptree.delete(testlist[0])
-    mybptree.show()
-    print('\nkey of this b+tree is \n')
-    print([kv.key for kv in mybptree.traversal()])
-    print([kv.key for kv in mybptree.search(mini, maxi)])
 
 
-#if __name__ == '__main__':
-#    test()
 
-## B = Bptree(4,4)
-## for i in range(10):
-##     B.insert(KeyValue(1 + i, i**2))
-
-# kv = B.search(10, 12)
-# print(len(kv))
-
-## kvs = B.traversal()
-## for k_v in kvs:
-##     print(k_v)
-## print("---------")
-## B.insert(KeyValue(0, 0))
-## B.insert(KeyValue(1, 10))
-## kvs = B.traversal()
-## for k_v in kvs:
-##     print(k_v)
-
-## leaf = B.leaf
-## smallest = B.leaf.vlist[0]
-## print(smallest.key)
-
-## B.insert(KeyValue(0,-1))
-
-## leaf = B.leaf
-## smallest = B.leaf.vlist[0]
-## print(smallest.key)
 
 
